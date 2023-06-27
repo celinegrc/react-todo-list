@@ -1,0 +1,13 @@
+@use './variables.scss';
+
+header{
+    background-color: variables.$color-violet;
+    width:100%;
+    height: 120px;
+    font-family: variables.$font-header;
+    font-size: 96px;
+    color : #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
