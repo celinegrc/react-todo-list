@@ -5,5 +5,5 @@ export default function Button({ text, action }) {
     <button onClick={action} className={styles.button}>
       <span>{text}</span>
     </button>
-  );
+  )
 }
