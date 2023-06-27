@@ -6,7 +6,8 @@ import styles from '../styles/home.module.scss';
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false);
-
+    localStorage.clear()
+    console.log(localStorage)
     const openModal = () => {
       setModalOpen(true);
     };
