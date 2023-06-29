@@ -49,9 +49,6 @@ export default function Form() {
       });
   };
       
-    
-  
-
     const handleSignIn = (e) => {
       e.preventDefault();
          
@@ -62,10 +59,11 @@ export default function Form() {
     
       axios.post('http://localhost:8000/api/auth/login', requestData)
         .then(response => {
-          navigate ("/todo-list")
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('userId', response.data.userId);
           localStorage.setItem('email', response.data.email)
+          const id = response.data.userId
+          navigate (`/todo-list/${id}`)
           const emailResponse = response.data.email
          // setUserEmail={emailResponse}
           console.log(localStorage)

@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import styles from '../styles/todo.module.scss';
 import checked from '../assets/check.png';
 import trash from '../assets/trash.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Todo() {
   const [todo, setTodo] = useState('');
   const [todos, setTodos] = useState([]);
   const email = localStorage.getItem('email');
-  const userId = localStorage.getItem('userId')
+  const userId = useParams()
+  console.log(userId)
   const navigate = useNavigate();
 
   useEffect(() => {
     // Effectue la requête GET pour récupérer les todos depuis l'API
     axios
-      .get(`http://localhost:8000/api/todo?userId=${userId}`)
+      .get(`http://localhost:8000/api/todo?userId=${userId.id}`)
       .then(response => {
         setTodos(response.data);
       })
@@ -38,8 +39,11 @@ export default function Todo() {
       todo: todo
     };
 
-    axios
-      .post('http://localhost:8000/api/todo/add', requestData)
+    axios.post('http://localhost:8000/api/todo/add', requestData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then(response => {
         console.log(response);
         // Met à jour la liste des todos après l'ajout
@@ -54,7 +58,11 @@ export default function Todo() {
   const handleDeleteTodo = (index) =>{
     const id = todos[index]._id
     console.log (id)
-    axios.delete(`http://localhost:8000/api/todo/${id}`)
+    axios.delete(`http://localhost:8000/api/todo/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
     .then(response => {
       // Mettez à jour la liste des todos après la suppression
       setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
