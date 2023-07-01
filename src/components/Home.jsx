@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import image_home from '../assets/image_home.png'
+import image_home from '../assets/todo.png'
 import Button from './Button';
 import Modal from './Modal';
 import styles from '../styles/home.module.scss';
+import {BsCheckLg} from 'react-icons/Bs'
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -17,13 +18,19 @@ export default function Home() {
     };
 
   return (
+    <>
     <main className={styles.home_container}>
+      
+      <div className = {styles.center}>
       <div className={styles.intro_container}>
-        <p>Ici, je consulte toutes mes tâches à réaliser en un coup d’oeil</p>
-        <p className={styles.home_intro_p}>Retrouvez votre TO DO list en ligne</p>
+      <h1> Ma TODO Liste</h1>
+            <p>
+            <BsCheckLg/> Organisation  <br/> <BsCheckLg/> Productivité<br/> <BsCheckLg/> Efficacité<br/>
+            Je retrouve toutes mes tâches à réaliser en un clin d'oeil.  
+          </p>
+        
         <div className={styles.buttons_container}>
-          <Button text="Se connecter" action={openModal} />
-          <Button text="S'inscrire" action={openModal} />
+          <button onClick={openModal} className={styles.button}>C'est parti !</button>
         </div>
       </div>
 
@@ -34,6 +41,11 @@ export default function Home() {
       <Modal isOpen={modalOpen} onClose={closeModal}>
         {/* Contenu de votre modale */}
       </Modal>
+      </div>
     </main>
+    <footer>
+      <p>© 2023 - Tous droits réservés</p>
+    </footer>
+    </>
   );
 }

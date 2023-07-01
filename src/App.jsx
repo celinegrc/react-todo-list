@@ -13,7 +13,6 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <>
-      <Header />,
       <Home />
       </>
     )
@@ -22,7 +21,6 @@ const router = createBrowserRouter([
     path: `/todo-list/:id`,
     element: (
       <>
-      <Header />,
       <Todo />
       </>
     )

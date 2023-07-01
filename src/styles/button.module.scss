@@ -1,7 +1,7 @@
 @use './variables.scss';
 
 .button{
-    background-color: variables.$color-violet;
+    background-color:lighten(#dc2430,20%) ;
     border: none;
     width:200px;
     height:60px;
@@ -12,9 +12,21 @@
             cursor: pointer;
         }
         span{
-            font-size:24px;
-            color: #ffffff;
+            font-size:22px;
+            font-weight:500;
+            color: white;
             font-family: variables.$font-poppins;
         }
+
+}
+
+@media screen and (max-width: 767px){
+    .button{
+        width:150px;
+        height:60px;
+    span{
+        font-size:16px;
+    }
+}
 
 }
