@@ -3,6 +3,7 @@ import Button from "./Button"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Loader from "./Loader"
 
 
 export default function Form() {
@@ -11,7 +12,7 @@ export default function Form() {
   const [errorMail, setErrorMail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
   const [loginError, setLoginError] = useState('')
- // const [userEmail, setUserEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
   
@@ -19,13 +20,16 @@ export default function Form() {
   
   const handleSignUp = (e) => {
     e.preventDefault();
+    setIsLoading(true)
   
     if (!emailRegex.test(email)) {
         setErrorMail('Adresse e-mail invalide');
+        setIsLoading(false)
       } 
 
     if (password.length < 6){
       setErrorPassword('mot de passe trop court')
+      setIsLoading(false)
       return;
     }
 
@@ -34,14 +38,14 @@ export default function Form() {
       password: password
     };
   
-    axios.post('http://localhost:8000/api/auth/signup', requestData)
+    axios.post('https://todo-list-api-eight.vercel.app/api/auth/signup', requestData)
       .then(response => {
         console.log(response.data);
         // Vérifie si la création du compte est réussie avant de connecter l'utilisateur
         if (response.status === 201) {
           handleSignIn(e);
         } else {
-          // Gérer le cas d'erreur de création du compte
+          setIsLoading(false)
         }
       })
       .catch(error => {
@@ -51,13 +55,13 @@ export default function Form() {
       
     const handleSignIn = (e) => {
       e.preventDefault();
-         
+      setIsLoading(true)
       const requestData = {
         email: email,
         password: password
       };
     
-      axios.post('http://localhost:8000/api/auth/login', requestData)
+      axios.post('https://todo-list-api-eight.vercel.app/api/auth/login', requestData)
         .then(response => {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('userId', response.data.userId);
@@ -65,11 +69,10 @@ export default function Form() {
           const id = response.data.userId
           navigate (`/todo-list/${id}`)
           const emailResponse = response.data.email
-         // setUserEmail={emailResponse}
-          console.log(localStorage)
         })
         .catch(error => {
           console.error(error);
+          setIsLoading(false)
           setLoginError('Echec, vérifiez votre email et votre mot de passe')
         });
       };
@@ -102,10 +105,13 @@ export default function Form() {
                 />
                 {errorPassword && <span className={styles.span_error}>{errorPassword}</span>}
             </div>
+            {isLoading && <div><Loader /></div> }
             <div className={styles.buttons_container}>
                 <Button  text="Se connecter" action ={handleSignIn}/>
                 <Button  text="S'inscrire" action={ handleSignUp} />
             </div>
+            
+            
         </form>
         
       </>

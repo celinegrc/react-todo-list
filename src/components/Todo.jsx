@@ -4,20 +4,22 @@ import checked from '../assets/check.png';
 import trash from '../assets/trash.png'
 import {FiLogOut} from 'react-icons/fi'
 import { useNavigate, useParams } from 'react-router-dom';
+import Loader from "./Loader"
 import axios from 'axios';
 
 export default function Todo() {
-  const [todo, setTodo] = useState('');
-  const [todos, setTodos] = useState([]);
-  const [isCompleted, setIsCompleted] = useState(false)
-  const email = localStorage.getItem('email');
+  const [todo, setTodo] = useState('')
+  const [todos, setTodos] = useState([])
+  const email = localStorage.getItem('email')
   const userId = useParams()
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading]= useState(false)
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     // Effectue la requête GET pour récupérer les todos depuis l'API
     axios
-      .get(`http://localhost:8000/api/todo?userId=${userId.id}`)
+      .get(`https://todo-list-api-eight.vercel.app/api/todo?userId=${userId.id}`)
       .then(response => {
         setTodos(response.data);
       })
@@ -27,28 +29,29 @@ export default function Todo() {
   }, []);
 
   function logout() {
-    localStorage.clear();
-    console.log(localStorage);
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId')
+    localStorage.removeItem('email')
     navigate('/');
   }
 
 
   const handleAddTodo = e => {
     e.preventDefault();
-
+    setIsLoading(true)
     const requestData = {
       userId: localStorage.getItem('userId'),
       todo: todo
     };
 
-    axios.post('http://localhost:8000/api/todo/add', requestData, {
+    axios.post('https://todo-list-api-eight.vercel.app/api/todo/add', requestData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
       .then(response => {
         console.log(response);
-        // Met à jour la liste des todos après l'ajout
+        setIsLoading(false)
         setTodos(prevTodos => [...prevTodos, response.data]);
         console.log(todos)
         setTodo('');
@@ -61,7 +64,7 @@ export default function Todo() {
   const handleDeleteTodo = (index) =>{
     const id = todos[index]._id
     console.log (id)
-    axios.delete(`http://localhost:8000/api/todo/${id}`, {
+    axios.delete(`https://todo-list-api-eight.vercel.app/api/todo/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -88,7 +91,7 @@ const handleCompleted = (index) => {
   setTodos(updatedTodos);
 
   axios
-    .put(`http://localhost:8000/api/todo/${id}`, updatedTodos[index], {
+    .put(`https://todo-list-api-eight.vercel.app/api/todo/${id}`, updatedTodos[index], {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -124,10 +127,10 @@ const handleCompleted = (index) => {
           maxLength='30'
         />
         <button type="button" className={styles.add_button} onClick={handleAddTodo}>
-          Ajouter
+          +
         </button>
       </div>
-
+      {isLoading && <Loader />}
       <ul>
         {todos.map((todoItem, index) => (
           <li key={index}>

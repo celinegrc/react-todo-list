@@ -21,7 +21,7 @@
     text-decoration-thickness: 2px;
 }
 .logout{
-    font-weight: 600;
+    font-weight: 500;
 }
 
 
@@ -42,22 +42,32 @@
     display:flex;
     width: 250px;
     justify-content: space-between;
+    font-size:18px;
+    font-weight: 600;
 }
-
 
 .add_button{
     border-radius: 0px;
     background: #3C3A4A;
     display: flex;
-    width: 102px;
+    width: 55px;
     height: 55px;
-    padding: 8px 15px;
+    padding: 4px 10px;
     justify-content: center;
     align-items: center;
     border:none;
     color: #FFF;
-    font-size: 20px;
+    font-size: 40px;
     font-weight: 600;
+}
+
+.add_button:hover{
+    cursor:pointer;
+    scale: 1.03;
+}
+
+.add_button:focus{
+    scale: 1.03;
 }
 
 .input_todo{
@@ -106,7 +116,7 @@ ul{
         .todo_name{
             padding-left : 10px;
             border-radius: 5px;
-            background: #FFF;
+            background: #fcf9f9;
             font-size: 24px;
             width: 500px;
             display:flex;
@@ -139,6 +149,7 @@ ul{
         }
         :hover{
             cursor: pointer;
+            background-color: #ddbcca;
         }
 }
 
@@ -156,9 +167,9 @@ ul{
         align-items: center;
     }
     .input_wrapper{
-        flex-direction: column;
         align-items: center;
         gap:20px;
+        margin-bottom:10px;
     }
 
     .todo{
@@ -186,10 +197,6 @@ ul{
         font-size:18px;
     }
     
-    .add_button{
-        font-size: 16px;
-        font-weight: 600;
-    }
     .icone_container{
         display: flex;
         gap:10px;
