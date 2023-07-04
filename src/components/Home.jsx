@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import image_home from '../assets/todo.png'
-import Button from './Button';
 import Modal from './Modal';
 import styles from '../styles/home.module.scss';
-import {BsCheckLg} from 'react-icons/Bs'
+import {BsCheckLg} from '/react-icons/Bs'
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false);

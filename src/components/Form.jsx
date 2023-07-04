@@ -2,7 +2,7 @@ import styles from "../styles/form.module.scss"
 import Button from "./Button"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from '/axios';
 import Loader from "./Loader"
 
 

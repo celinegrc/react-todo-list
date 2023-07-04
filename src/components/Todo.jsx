@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styles from '../styles/todo.module.scss';
 import checked from '../assets/check.png';
 import trash from '../assets/trash.png'
-import {FiLogOut} from 'react-icons/fi'
+import {FiLogOut} from '/react-icons/fi'
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from "./Loader"
-import axios from 'axios';
+import axios from '/axios';
 
 export default function Todo() {
   const [todo, setTodo] = useState('')
