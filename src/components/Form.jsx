@@ -2,7 +2,7 @@ import styles from "../styles/form.module.scss"
 import Button from "./Button"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from '/axios';
+import axios from 'axios';
 import Loader from "./Loader"
 
 
@@ -50,6 +50,8 @@ export default function Form() {
       })
       .catch(error => {
         console.error(error);
+          setIsLoading(false)
+          alert("une erreur est survenue")
       });
   };
       
